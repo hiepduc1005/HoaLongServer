@@ -1,14 +1,21 @@
 package com.hstore.vn.service.impl;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hstore.vn.entity.Product;
 import com.hstore.vn.service.CartService;
+import com.hstore.vn.service.ProductService;
 
 @Service
 public class DefaultCartService implements CartService{
+	
+	@Autowired
+	public ProductService productService;
 	
 	@Override
 	public Map<Long, Integer> convertCartCookieToMap(String cookieCart){
@@ -49,6 +56,27 @@ public class DefaultCartService implements CartService{
 		
 		return newCartCookie.toString();
 		
+	}
+
+	@Override
+	public BigDecimal getTotalPriceInCart(Map<Long, Integer> cartMap) {
+		BigDecimal totalPrice = BigDecimal.ZERO;
+		
+		if(!cartMap.isEmpty()) {
+			
+			for(Map.Entry<Long,Integer> entry : cartMap.entrySet()) {
+				Product product = productService.getProductById(entry.getKey());
+				if(product != null) {
+					BigDecimal productPrice = product.getPrice();
+					BigDecimal quantity = BigDecimal.valueOf(entry.getValue());
+					BigDecimal total = productPrice.multiply(quantity);
+					totalPrice = totalPrice.add(total);
+				}
+		   }
+		
+		}
+				
+		return totalPrice;
 	}
 	
 

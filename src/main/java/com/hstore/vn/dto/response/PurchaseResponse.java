@@ -1,7 +1,6 @@
 package com.hstore.vn.dto.response;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 import com.hstore.vn.entity.PurchaseStatus;
 
@@ -15,11 +14,11 @@ public class PurchaseResponse {
 	public String customerRequest;
 	public BigDecimal totalPrice;
 	public String date;
-	public Map<Long,Integer> productQuantity;
+	public String productQuantity;
     
 	public PurchaseResponse(Long id, String userName, String phoneNum,
 			PurchaseStatus purchaseStatus, String address, String customerRequest, BigDecimal totalPrice,
-			String date, Map<Long, Integer> productQuantity) {
+			String date, String productQuantity) {
 		
 		this.id = id;
 		this.userName = userName;

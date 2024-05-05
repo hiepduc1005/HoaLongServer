@@ -11,6 +11,10 @@ public interface PurchaseService {
 	
 	List<Purchase> getNotCompletePurchase();
 	
+	List<Purchase> getAllPurchase();
+	
+	List<Purchase> getTodayPurchase();
+	
 	Purchase updateToCompletePurchase(Long purchaseId);
 	
 	Purchase getPurchaseById(Long id);

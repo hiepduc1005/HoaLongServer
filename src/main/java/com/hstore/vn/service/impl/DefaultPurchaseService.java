@@ -34,6 +34,13 @@ public class DefaultPurchaseService implements PurchaseService{
 		String date = dateTime.format(formatter);
 		return date;
 	}
+	
+	private String getTodayDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDateTime dateTime = LocalDateTime.now();
+		String date = dateTime.format(formatter);
+		return date;
+	}
 
 	@Override
 	public Purchase savePurchase(Purchase purchase) {
@@ -140,6 +147,18 @@ public class DefaultPurchaseService implements PurchaseService{
 			}
 		}
 		return res;
+	}
+
+	@Override
+	public List<Purchase> getAllPurchase() {
+		
+		return purchaseRepository.findAll();
+	}
+
+
+	@Override
+	public List<Purchase> getTodayPurchase() {
+		return purchaseRepository.getPurchaseByDate(getTodayDate());
 	}
 
 }

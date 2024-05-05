@@ -49,6 +49,15 @@ public class PurchaseController {
 		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses,HttpStatus.OK);
 	}
 	
+	@GetMapping("/all")
+	public ResponseEntity<List<PurchaseResponse>> getAllPurchase(){
+		List<Purchase> purchases = purchaseService.getAllPurchase();
+		
+		List<PurchaseResponse> purchaseResponses = purchaseConvert.purchasesConvertToPurchasesResponse(purchases);
+		
+		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses,HttpStatus.OK);
+	}
+	
 	@GetMapping("/not-complete")
 	public ResponseEntity<List<PurchaseResponse>> getNotCompletedPurchase(){
 		List<Purchase> purchases = purchaseService.getNotCompletePurchase();
@@ -63,6 +72,15 @@ public class PurchaseController {
 		BigDecimal totalPrice = purchaseService.getTotalsMoneyByPurchase(id);
 		
 		return new ResponseEntity<BigDecimal>(totalPrice,HttpStatus.OK);
+	}
+	
+	@GetMapping("/today")
+	public ResponseEntity<List<PurchaseResponse>> getTodayPurchase(){
+		List<Purchase> purchases = purchaseService.getTodayPurchase();
+		
+		List<PurchaseResponse> purchaseResponses = purchaseConvert.purchasesConvertToPurchasesResponse(purchases);
+		
+		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses,HttpStatus.OK);
 	}
 	
 	@PostMapping

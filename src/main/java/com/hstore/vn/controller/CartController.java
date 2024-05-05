@@ -1,5 +1,6 @@
 package com.hstore.vn.controller;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hstore.vn.dto.request.CartProductAddRequest;
 import com.hstore.vn.dto.request.CartProductDeleteRequest;
+import com.hstore.vn.dto.response.TotalPriceResponse;
 import com.hstore.vn.service.CartService;
 
 import jakarta.servlet.http.Cookie;
@@ -34,7 +36,18 @@ public class CartController {
 		
 		Map<Long,Integer> cartMap = cartService.convertCartCookieToMap(cartCookie);
 		return new ResponseEntity<Map<Long,Integer>>(cartMap,HttpStatus.OK);
+		 
+	}
+	
+	@GetMapping("/total-price")
+	public ResponseEntity<TotalPriceResponse> getTotalPriceInCart (
+			@CookieValue(name = "cart" , defaultValue = "") String cartCookie
+			){
 		
+		Map<Long,Integer> cartMap = cartService.convertCartCookieToMap(cartCookie);
+		BigDecimal totalPrice = cartService.getTotalPriceInCart(cartMap);
+		
+		return new ResponseEntity<TotalPriceResponse>(new TotalPriceResponse(totalPrice),HttpStatus.OK);
 	}
 	
 	@PostMapping("/add")
