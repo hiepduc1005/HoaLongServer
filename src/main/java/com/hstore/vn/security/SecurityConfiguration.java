@@ -19,61 +19,56 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
-	
+
 	@Autowired
 	public CustomUserDetailsService customUserDetailsService;
-	
+
 	@Autowired
 	public PasswordEncoder passwordEncoder;
-	
-	
+
 	public SecurityConfiguration(CustomUserDetailsService customUserDetailsService, PasswordEncoder passwordEncoder) {
 		this.customUserDetailsService = customUserDetailsService;
 		this.passwordEncoder = passwordEncoder;
 	}
-	
+
 	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+			throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 
-    @Bean
-    JWTAuthenticationFilter jwtAuthenticationFilter() {
+	@Bean
+	JWTAuthenticationFilter jwtAuthenticationFilter() {
 		return new JWTAuthenticationFilter();
 	}
 
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http
+				.csrf(csrf -> csrf.disable())
+
+				.sessionManagement(sessionManage -> sessionManage
+						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(requestMatcher -> requestMatcher.requestMatchers(
+						"/api/v1/auth/**").permitAll().requestMatchers(HttpMethod.GET).permitAll()
+						.requestMatchers(HttpMethod.POST).permitAll())
+				.authorizeHttpRequests(requestMatcher -> requestMatcher.anyRequest().authenticated());
+
+		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+		return http.build();
+	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-	   http
-		.csrf(csrf -> csrf.disable())
-	 
-	    .sessionManagement(sessionManage -> 
-	                       sessionManage
-	                                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	    .authorizeHttpRequests(requestMatcher ->
-	                         requestMatcher.requestMatchers(
-	                                    "/api/v1/auth/**" 
-	        ).permitAll().requestMatchers(HttpMethod.GET).permitAll().requestMatchers(HttpMethod.POST).permitAll())
-	    .authorizeHttpRequests(requestMatcher -> 
-	                       requestMatcher.anyRequest().authenticated());
-	    
-	   http.addFilterBefore(jwtAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
-	   
-	   return http.build();
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedMethods("*")
+						.allowCredentials(true)
+						.allowedOrigins("https://hoalong.netlify.app/", "https://master--hoalong.netlify.app");
+			}
+		};
 	}
-	
-	
-	 @Bean
-	   public WebMvcConfigurer corsConfigurer() {
-	       return new WebMvcConfigurer() {
-	           @Override
-	           public void addCorsMappings(CorsRegistry registry) {
-	               registry.addMapping("/**")
-	                       .allowedMethods("*")
-	                       .allowCredentials(true)
-	                       .allowedOrigins("http://localhost:3000");
-	           }
-	       };
-	   }
 }
