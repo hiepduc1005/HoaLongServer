@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.hstore.vn.entity.Product;
+import com.hstore.vn.exception.DataNotFoundException;
 import com.hstore.vn.exception.ProductException;
 import com.hstore.vn.repository.ProductRepository;
 import com.hstore.vn.service.ProductService;
@@ -55,7 +56,14 @@ public class DefaultProductService implements ProductService{
 		if(id == null) {
 			throw new IllegalArgumentException("Product id must be a integer and not null!");
 		}
-		return productRepository.findById(id).orElse(null);
+		
+		Product product = productRepository.findById(id).orElse(null); 
+		
+		if(product == null) {
+			throw new DataNotFoundException("Cant not found product with id " + id);
+		}
+		
+		return product; 
 	}
 
 	@Override

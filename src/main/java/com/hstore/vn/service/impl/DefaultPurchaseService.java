@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.hstore.vn.entity.Product;
 import com.hstore.vn.entity.Purchase;
 import com.hstore.vn.entity.PurchaseStatus;
+import com.hstore.vn.exception.DataNotFoundException;
 import com.hstore.vn.exception.PurchaseException;
 import com.hstore.vn.repository.ProductRepository;
 import com.hstore.vn.repository.PurchaseRepository;
@@ -88,7 +89,14 @@ public class DefaultPurchaseService implements PurchaseService {
 		if (id == null) {
 			throw new IllegalArgumentException("Purchase id must be type long");
 		}
-		return purchaseRepository.findById(id).orElse(null);
+		
+		Purchase purchase = purchaseRepository.findById(id).orElse(null);
+		
+		if(purchase == null) {
+			throw new DataNotFoundException("Cant not found purchase with id : " + id );
+		}
+		
+		return purchase;
 	}
 
 	@Override

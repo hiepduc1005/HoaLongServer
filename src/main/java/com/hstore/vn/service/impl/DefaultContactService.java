@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.hstore.vn.entity.Contact;
 import com.hstore.vn.exception.ContactException;
+import com.hstore.vn.exception.DataNotFoundException;
 import com.hstore.vn.repository.ContactRepository;
 import com.hstore.vn.service.ContactService;
 
@@ -35,7 +36,13 @@ public class DefaultContactService implements ContactService{
 			throw new IllegalArgumentException("Phone number must not be null");
 		}
 		
-		return contactRepository.getContactsByUserPhoneNum(phoneNum);
+		List<Contact> contacts = contactRepository.getContactsByUserPhoneNum(phoneNum); 
+		
+		if(contacts == null || contacts.isEmpty()) {
+			throw new DataNotFoundException("Cant not found any contact with phone number " + phoneNum);
+		}
+		
+		return contacts;
 	}
 
 	@Override

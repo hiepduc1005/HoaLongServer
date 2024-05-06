@@ -13,6 +13,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class ExceptionGlobalHandler extends ResponseEntityExceptionHandler{
 	
+	@ExceptionHandler(DataNotFoundException.class)
+	public ResponseEntity<String> userEmailException(DataNotFoundException ex) {	 
+        return new ResponseEntity<String>(ex.getMessage(),HttpStatus.NOT_FOUND);
+    }
+	
 	@ExceptionHandler(UsernameNotFoundException.class)
 	public ResponseEntity<String> userEmailException(UsernameNotFoundException ex) {	 
         return new ResponseEntity<String>(ex.getMessage(),HttpStatus.NOT_FOUND);
