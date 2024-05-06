@@ -19,14 +19,16 @@ public class ProductConvert {
 			return null;
 		}
 		
-		
-		return new ProductResponse(
+		else {
+			return new ProductResponse(
 						product.getId(),
 						product.getName(),
 						product.getPrice(),
 						product.getDescription(),
 						product.getImgData(),
 						product.getGuid());
+		}
+		
 	}
 	
 	

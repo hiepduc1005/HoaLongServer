@@ -20,7 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	
 	@Transactional
 	@Query(nativeQuery = true ,value ="SELECT * FROM product WHERE UPPER(product_name) "
-						+ "LIKE UPPER(CONCAT('%',:query,'%')) LIMIT :offset , :limit")
+						+ "LIKE UPPER(CONCAT('%',:query,'%')) OFFSET  :offset LIMIT  :limit")
 	public List<Product> getProductsLikeNameWithPaginationLimit(
 			@Param("query") String query ,
 			@Param("offset") Integer page ,
@@ -28,7 +28,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	);
 	
 	@Transactional
-	@Query(nativeQuery = true ,value = "SELECT * FROM product LIMIT :offset , :limit")
+	@Query(nativeQuery = true ,value = "SELECT * FROM product OFFSET :offset LIMIT :limit")
 	public List<Product> getAllProductsWithPaginationLimit(
 			@Param("offset") Integer page ,
 			@Param("limit") Integer limit
