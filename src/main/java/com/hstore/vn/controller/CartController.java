@@ -72,8 +72,8 @@ public class CartController {
 		cookie.setMaxAge(60 * 60);
 		cookie.setHttpOnly(true);
 		cookie.setDomain("hoalong.netlify.app");
+		cookie.setSecure(true);
 		cookie.setPath("/");
-
 		response.addCookie(cookie);
 
 		return new ResponseEntity<String>("Product add to cart successfully!", HttpStatus.OK);
@@ -97,6 +97,7 @@ public class CartController {
 		cookie.setMaxAge(60 * 60);
 		cookie.setHttpOnly(true);
 		cookie.setDomain("hoalong.netlify.app");
+		cookie.setSecure(true);
 		cookie.setPath("/");
 
 		response.addCookie(cookie);
