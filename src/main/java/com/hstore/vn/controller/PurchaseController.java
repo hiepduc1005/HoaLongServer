@@ -25,97 +25,99 @@ import com.hstore.vn.service.convert.PurchaseConvert;
 @RestController
 @RequestMapping("/api/v1/purchase")
 public class PurchaseController {
-	
+
 	@Autowired
 	public PurchaseService purchaseService;
-	
+
 	@Autowired
 	public PurchaseConvert purchaseConvert;
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<PurchaseResponse> getPurchaseById(@PathVariable Long id){
+	public ResponseEntity<PurchaseResponse> getPurchaseById(@PathVariable("id") Long id) {
 		Purchase purchase = purchaseService.getPurchaseById(id);
-		
+
 		PurchaseResponse purchaseResponse = purchaseConvert.purchaseConvertToPurchaseResponse(purchase);
-		
-		return new ResponseEntity<PurchaseResponse>(purchaseResponse,HttpStatus.OK);
+
+		return new ResponseEntity<PurchaseResponse>(purchaseResponse, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/complete")
-	public ResponseEntity<List<PurchaseResponse>> getCompletedPurchase(){
+	public ResponseEntity<List<PurchaseResponse>> getCompletedPurchase() {
 		List<Purchase> purchases = purchaseService.getCompletedPurchase();
-		
+
 		List<PurchaseResponse> purchaseResponses = purchaseConvert.purchasesConvertToPurchasesResponse(purchases);
-		
-		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses,HttpStatus.OK);
+
+		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/all")
-	public ResponseEntity<List<PurchaseResponse>> getAllPurchase(){
+	public ResponseEntity<List<PurchaseResponse>> getAllPurchase() {
 		List<Purchase> purchases = purchaseService.getAllPurchase();
-		
+
 		List<PurchaseResponse> purchaseResponses = purchaseConvert.purchasesConvertToPurchasesResponse(purchases);
-		
-		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses,HttpStatus.OK);
+
+		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/not-complete")
-	public ResponseEntity<List<PurchaseResponse>> getNotCompletedPurchase(){
+	public ResponseEntity<List<PurchaseResponse>> getNotCompletedPurchase() {
 		List<Purchase> purchases = purchaseService.getNotCompletePurchase();
-		
+
 		List<PurchaseResponse> purchaseResponses = purchaseConvert.purchasesConvertToPurchasesResponse(purchases);
-		
-		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses,HttpStatus.OK);
+
+		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/price/{id}")
-	public ResponseEntity<BigDecimal> getTotalPriceByPurchase(@PathVariable Long id){
+	public ResponseEntity<BigDecimal> getTotalPriceByPurchase(@PathVariable("id") Long id) {
 		BigDecimal totalPrice = purchaseService.getTotalsMoneyByPurchase(id);
-		
-		return new ResponseEntity<BigDecimal>(totalPrice,HttpStatus.OK);
+
+		return new ResponseEntity<BigDecimal>(totalPrice, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/today")
-	public ResponseEntity<List<PurchaseResponse>> getTodayPurchase(){
+	public ResponseEntity<List<PurchaseResponse>> getTodayPurchase() {
 		List<Purchase> purchases = purchaseService.getTodayPurchase();
-		
+
 		List<PurchaseResponse> purchaseResponses = purchaseConvert.purchasesConvertToPurchasesResponse(purchases);
-		
-		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses,HttpStatus.OK);
+
+		return new ResponseEntity<List<PurchaseResponse>>(purchaseResponses, HttpStatus.OK);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<PurchaseResponse> postPurchase(@RequestBody PurchaseRequest purchaseRequest){
-		Purchase purchase = purchaseService.savePurchase(purchaseConvert.purchaseResquestConvertToPurchase(purchaseRequest));
-		
+	public ResponseEntity<PurchaseResponse> postPurchase(@RequestBody PurchaseRequest purchaseRequest) {
+		Purchase purchase = purchaseService
+				.savePurchase(purchaseConvert.purchaseResquestConvertToPurchase(purchaseRequest));
+
 		PurchaseResponse purchaseResponse = purchaseConvert.purchaseConvertToPurchaseResponse(purchase);
-		
-		return new ResponseEntity<PurchaseResponse>(purchaseResponse,HttpStatus.OK);
+
+		return new ResponseEntity<PurchaseResponse>(purchaseResponse, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/update-complete/{id}")
-	public ResponseEntity<PurchaseResponse> updatePurchaseToComplete(@PathVariable Long id){
+	public ResponseEntity<PurchaseResponse> updatePurchaseToComplete(@PathVariable("id") Long id) {
 		Purchase purchase = purchaseService.updateToCompletePurchase(id);
-		
+
 		PurchaseResponse purchaseResponse = purchaseConvert.purchaseConvertToPurchaseResponse(purchase);
-		
-		return new ResponseEntity<PurchaseResponse>(purchaseResponse,HttpStatus.OK);
+
+		return new ResponseEntity<PurchaseResponse>(purchaseResponse, HttpStatus.OK);
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<PurchaseResponse> updatePurchase(@RequestBody PurchaseRequestUpdate purchaseRequestUpdate){
-		Purchase purchase = purchaseService.updatePurchase(purchaseConvert.purchaseRequestUpdateConvertToPurchase(purchaseRequestUpdate));
-		
+	public ResponseEntity<PurchaseResponse> updatePurchase(@RequestBody PurchaseRequestUpdate purchaseRequestUpdate) {
+		Purchase purchase = purchaseService
+				.updatePurchase(purchaseConvert.purchaseRequestUpdateConvertToPurchase(purchaseRequestUpdate));
+
 		PurchaseResponse purchaseResponse = purchaseConvert.purchaseConvertToPurchaseResponse(purchase);
-		
-		return new ResponseEntity<PurchaseResponse>(purchaseResponse,HttpStatus.OK);
+
+		return new ResponseEntity<PurchaseResponse>(purchaseResponse, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deletePurchase(@PathVariable Long id){
+	public ResponseEntity<String> deletePurchase(@PathVariable("id") Long id) {
 		purchaseService.deletePurchase(id);
-		
-		return new ResponseEntity<String>("Delete purchase id " + id + " success!" ,HttpStatus.OK);
+
+		return new ResponseEntity<String>("Delete purchase id " + id + " success!", HttpStatus.OK);
 	}
-	
+
 }
