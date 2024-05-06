@@ -66,31 +66,34 @@ public class SecurityConfiguration {
 		return http.build();
 	}
 
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowedOrigins(Arrays.asList("https://hoalong.netlify.app", "https://hoalong.onrender.com",
-				"https://master--hoalong.netlify.app"));
-		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-		corsConfiguration.setAllowCredentials(true);
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", corsConfiguration);
-
-		return source;
-	}
-
 	// @Bean
-	// public WebMvcConfigurer corsConfigurer() {
-	// return new WebMvcConfigurer() {
-	// @Override
-	// public void addCorsMappings(CorsRegistry registry) {
-	// registry.addMapping("/**")
-	// .allowedMethods("*")
-	// .allowCredentials(true)
-	// .allowedOrigins("https://hoalong.netlify.app/",
-	// "https://hoalong.onrender.com");
+	// CorsConfigurationSource corsConfigurationSource() {
+	// CorsConfiguration corsConfiguration = new CorsConfiguration();
+	// corsConfiguration.setAllowedOrigins(Arrays.asList("https://hoalong.netlify.app",
+	// "https://hoalong.onrender.com",
+	// "https://master--hoalong.netlify.app"));
+	// corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT",
+	// "DELETE"));
+	// corsConfiguration.setAllowCredentials(true);
+	// UrlBasedCorsConfigurationSource source = new
+	// UrlBasedCorsConfigurationSource();
+	// source.registerCorsConfiguration("/**", corsConfiguration);
+
+	// return source;
 	// }
-	// };
-	// }
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedMethods("*")
+						.allowCredentials(true)
+						.allowedOrigins("https://hoalong.netlify.app",
+								"https://hoalong.onrender.com");
+			}
+		};
+	}
 
 }
