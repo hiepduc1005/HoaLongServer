@@ -7,6 +7,9 @@ WORKDIR /app
 # Sao chép tệp pom.xml và sao chép các tệp khác vào thư mục hiện tại
 COPY ./pom.xml .
 
+RUN apt-get update && \
+    apt-get install -y maven
+
 # Tải các phụ thuộc Maven (dependencies) và tạo ra một layer riêng
 RUN mvn dependency:go-offline -B
 
