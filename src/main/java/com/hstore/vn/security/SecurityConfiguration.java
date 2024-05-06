@@ -67,8 +67,6 @@ public class SecurityConfiguration {
 				registry.addMapping("/**")
 						.allowedMethods("*")
 						.allowCredentials(true)
-//						 .allowedOrigins("https://hoalong.netlify.app/",
-//						 "https://master--hoalong.netlify.app");
 						.allowedOrigins("https://hoalong.netlify.app", "https://master--hoalong.netlify.app");
 						
 			}
