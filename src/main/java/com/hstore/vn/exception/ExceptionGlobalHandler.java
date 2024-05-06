@@ -13,37 +13,37 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class ExceptionGlobalHandler extends ResponseEntityExceptionHandler{
 	
-	@ExceptionHandler(DataNotFoundException.class)
+	@ExceptionHandler(value =  DataNotFoundException.class)
 	public ResponseEntity<String> userEmailException(DataNotFoundException ex) {	 
         return new ResponseEntity<String>(ex.getMessage(),HttpStatus.NOT_FOUND);
     }
 	
-	@ExceptionHandler(UsernameNotFoundException.class)
+	@ExceptionHandler(value = UsernameNotFoundException.class)
 	public ResponseEntity<String> userEmailException(UsernameNotFoundException ex) {	 
         return new ResponseEntity<String>(ex.getMessage(),HttpStatus.NOT_FOUND);
     }
 	
-	@ExceptionHandler(AccessDeniedException.class)
+	@ExceptionHandler(value = AccessDeniedException.class)
 	public ResponseEntity<String> handleAccessDenieException(AccessDeniedException ex) {	 
         return new ResponseEntity<String>(ex.getMessage(),HttpStatus.FORBIDDEN);
     }
 	
-	@ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
+	@ExceptionHandler(value = AuthenticationCredentialsNotFoundException.class)
 	public ResponseEntity<String> handleAuthException(AuthenticationCredentialsNotFoundException ex) {	 
         return new ResponseEntity<String>(ex.getMessage(),HttpStatus.UNAUTHORIZED);
     }
 	    
-    @ExceptionHandler(ContactException.class)
+    @ExceptionHandler(value = ContactException.class)
     public ResponseEntity<String> handleContactException(ContactException ex) {	 
         return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
     }
     
-    @ExceptionHandler(ProductException.class)
+    @ExceptionHandler(value = ProductException.class)
     public ResponseEntity<String> handleProductException(ProductException ex) {	 
         return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
     }
     
-    @ExceptionHandler(PurchaseException.class)
+    @ExceptionHandler(value = PurchaseException.class)
     public ResponseEntity<String> handlePurchaseException(PurchaseException ex) {	 
         return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
     }
