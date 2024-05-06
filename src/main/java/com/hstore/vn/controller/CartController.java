@@ -24,87 +24,85 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/api/v1/cart")
 public class CartController {
-	
+
 	@Autowired
 	public CartService cartService;
-	
+
 	@GetMapping("/products")
-	public ResponseEntity<Map<Long,Integer>> getAllProductsInCart(
-			@CookieValue(name = "cart" , defaultValue = "") String cartCookie
-			
-			){
-		
-		Map<Long,Integer> cartMap = cartService.convertCartCookieToMap(cartCookie);
-		return new ResponseEntity<Map<Long,Integer>>(cartMap,HttpStatus.OK);
-		 
+	public ResponseEntity<Map<Long, Integer>> getAllProductsInCart(
+			@CookieValue(name = "cart", defaultValue = "") String cartCookie
+
+	) {
+
+		Map<Long, Integer> cartMap = cartService.convertCartCookieToMap(cartCookie);
+		return new ResponseEntity<Map<Long, Integer>>(cartMap, HttpStatus.OK);
+
 	}
-	
+
 	@GetMapping("/total-price")
-	public ResponseEntity<TotalPriceResponse> getTotalPriceInCart (
-			@CookieValue(name = "cart" , defaultValue = "") String cartCookie
-			){
-		
-		Map<Long,Integer> cartMap = cartService.convertCartCookieToMap(cartCookie);
+	public ResponseEntity<TotalPriceResponse> getTotalPriceInCart(
+			@CookieValue(name = "cart", defaultValue = "") String cartCookie) {
+
+		Map<Long, Integer> cartMap = cartService.convertCartCookieToMap(cartCookie);
 		BigDecimal totalPrice = cartService.getTotalPriceInCart(cartMap);
-		
-		return new ResponseEntity<TotalPriceResponse>(new TotalPriceResponse(totalPrice),HttpStatus.OK);
+
+		return new ResponseEntity<TotalPriceResponse>(new TotalPriceResponse(totalPrice), HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/add")
 	public ResponseEntity<String> addProductToCart(
 			@RequestBody CartProductAddRequest cartProductRequest,
 			HttpServletResponse response,
-			@CookieValue(name = "cart" , defaultValue = "") String cartCookie){
-		
+			@CookieValue(name = "cart", defaultValue = "") String cartCookie) {
+
 		Long productId = cartProductRequest.getProductId();
 		Integer quantity = cartProductRequest.getQuantity();
-		
-		if(quantity <= 0) {
-			return new ResponseEntity<String>("Số lượng không hợp lệ!",HttpStatus.BAD_REQUEST);
+
+		if (quantity <= 0) {
+			return new ResponseEntity<String>("Số lượng không hợp lệ!", HttpStatus.BAD_REQUEST);
 		}
-		
-		Map<Long,Integer> cartMap = cartService.convertCartCookieToMap(cartCookie);
-		
-		
+
+		Map<Long, Integer> cartMap = cartService.convertCartCookieToMap(cartCookie);
+
 		cartMap.put(productId, quantity);
-		
-		
+
 		String newCartCookie = cartService.convertMapToCartCookie(cartMap);
-		
+
 		Cookie cookie = new Cookie("cart", newCartCookie);
-		cookie.setMaxAge(60*60);
+		cookie.setMaxAge(60 * 60);
 		cookie.setHttpOnly(true);
+		cookie.setDomain("hoalong.netlify.app");
 		cookie.setPath("/");
 
-		
 		response.addCookie(cookie);
-		
-		return new ResponseEntity<String>("Product add to cart successfully!",HttpStatus.OK);
+
+		return new ResponseEntity<String>("Product add to cart successfully!", HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/delete")
-	public ResponseEntity<Map<Long,Integer>> deleteProductInCart(
+	public ResponseEntity<Map<Long, Integer>> deleteProductInCart(
 			@RequestBody CartProductDeleteRequest cartProductDeleteRequest,
 			HttpServletResponse response,
-			@CookieValue(name = "cart", defaultValue = "") String cookieCart){
-		
+			@CookieValue(name = "cart", defaultValue = "") String cookieCart) {
+
 		Long productId = cartProductDeleteRequest.getProductId();
-		
-		Map<Long,Integer> cartMap = cartService.convertCartCookieToMap(cookieCart);
-	
+
+		Map<Long, Integer> cartMap = cartService.convertCartCookieToMap(cookieCart);
+
 		cartMap.remove(productId);
-		
-        String newCartCookie = cartService.convertMapToCartCookie(cartMap);
-		
+
+		String newCartCookie = cartService.convertMapToCartCookie(cartMap);
+
 		Cookie cookie = new Cookie("cart", newCartCookie);
-		cookie.setMaxAge(60*60);
+		cookie.setMaxAge(60 * 60);
 		cookie.setHttpOnly(true);
+		cookie.setDomain("hoalong.netlify.app");
 		cookie.setPath("/");
-		
+
 		response.addCookie(cookie);
-		
-		return new ResponseEntity<Map<Long,Integer>>(cartMap, HttpStatus.OK);
-		
+
+		return new ResponseEntity<Map<Long, Integer>>(cartMap, HttpStatus.OK);
+
 	}
-	
+
 }

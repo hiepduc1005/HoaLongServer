@@ -91,7 +91,7 @@ public class SecurityConfiguration {
 						.allowedMethods("*")
 						.allowCredentials(true)
 						.allowedOrigins("https://hoalong.netlify.app",
-								"https://hoalong.onrender.com");
+								"https://hoalong.onrender.com", "http://localhost:3000");
 			}
 		};
 	}
