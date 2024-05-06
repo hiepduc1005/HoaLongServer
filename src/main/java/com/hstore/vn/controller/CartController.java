@@ -71,7 +71,7 @@ public class CartController {
 		Cookie cookie = new Cookie("cart", newCartCookie);
 		cookie.setMaxAge(60 * 60 * 24 * 30);
 		cookie.setDomain("hoalong.netlify.app");
-		cookie.setSecure(true);
+		// cookie.setSecure(true);
 		cookie.setPath("/");
 		response.addCookie(cookie);
 
@@ -95,7 +95,7 @@ public class CartController {
 		Cookie cookie = new Cookie("cart", newCartCookie);
 		cookie.setMaxAge(60 * 60 * 24 * 30);
 		cookie.setDomain("hoalong.netlify.app");
-		cookie.setSecure(true);
+		// cookie.setSecure(true);
 		cookie.setPath("/");
 
 		response.addCookie(cookie);
