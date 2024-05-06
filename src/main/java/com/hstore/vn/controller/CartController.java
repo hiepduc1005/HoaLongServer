@@ -70,10 +70,10 @@ public class CartController {
 
 		Cookie cookie = new Cookie("cart", newCartCookie);
 		cookie.setMaxAge(60 * 60);
-		cookie.setHttpOnly(true);
+		cookie.setDomain(".netlify.app");
+		// cookie.setHttpOnly(true);
 		cookie.setSecure(true);
-		// cookie.setPath("/");
-
+		cookie.setPath("/");
 		response.addCookie(cookie);
 
 		return new ResponseEntity<String>("Product add to cart successfully!", HttpStatus.OK);
@@ -95,10 +95,10 @@ public class CartController {
 
 		Cookie cookie = new Cookie("cart", newCartCookie);
 		cookie.setMaxAge(60 * 60);
-		// cookie.setDomain("hoalong.netlify.app");
-		cookie.setHttpOnly(true);
+		cookie.setDomain(".netlify.app");
+		// cookie.setHttpOnly(true);
 		cookie.setSecure(true);
-		// cookie.setPath("/");
+		cookie.setPath("/");
 
 		response.addCookie(cookie);
 
