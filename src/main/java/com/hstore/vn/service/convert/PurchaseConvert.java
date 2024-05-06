@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hstore.vn.dto.request.PurchaseRequest;
+import com.hstore.vn.dto.request.PurchaseRequestUpdate;
 import com.hstore.vn.dto.response.PurchaseResponse;
 import com.hstore.vn.entity.Product;
 import com.hstore.vn.entity.Purchase;
@@ -75,6 +76,17 @@ public class PurchaseConvert {
 		purchase.setPhoneNum(purchaseRequest.getPhoneNum());
 		purchase.setTotalPrice(purchaseRequest.getTotalPrice());
 
+		return purchase;
+	}
+	
+	public Purchase purchaseRequestUpdateConvertToPurchase(PurchaseRequestUpdate purchaseRequestUpdate) {
+		Purchase purchase = new Purchase();
+		purchase.setId(purchaseRequestUpdate.getId());
+		purchase.setAddress(purchaseRequestUpdate.getAddress());
+		purchase.setCustomerRequest(purchaseRequestUpdate.getCustomerRequest());
+		purchase.setProductQuantity(purchaseRequestUpdate.getProductQuantity());
+		purchase.setTotalPrice(purchaseRequestUpdate.getTotalPrice());
+		
 		return purchase;
 	}
 

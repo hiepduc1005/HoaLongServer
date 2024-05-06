@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hstore.vn.dto.request.PurchaseRequest;
+import com.hstore.vn.dto.request.PurchaseRequestUpdate;
 import com.hstore.vn.dto.response.PurchaseResponse;
 import com.hstore.vn.entity.Purchase;
 import com.hstore.vn.service.PurchaseService;
@@ -102,8 +103,8 @@ public class PurchaseController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<PurchaseResponse> updatePurchase(@RequestBody PurchaseRequest purchaseRequest){
-		Purchase purchase = purchaseService.updatePurchase(purchaseConvert.purchaseResquestConvertToPurchase(purchaseRequest));
+	public ResponseEntity<PurchaseResponse> updatePurchase(@RequestBody PurchaseRequestUpdate purchaseRequestUpdate){
+		Purchase purchase = purchaseService.updatePurchase(purchaseConvert.purchaseRequestUpdateConvertToPurchase(purchaseRequestUpdate));
 		
 		PurchaseResponse purchaseResponse = purchaseConvert.purchaseConvertToPurchaseResponse(purchase);
 		
