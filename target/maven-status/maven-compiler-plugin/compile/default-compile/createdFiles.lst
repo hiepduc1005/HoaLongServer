@@ -7,6 +7,7 @@ com\hstore\vn\repository\PurchaseRepository.class
 com\hstore\vn\security\SecurityConfiguration.class
 com\hstore\vn\service\PurchaseService.class
 com\hstore\vn\exception\ExceptionGlobalHandler.class
+com\hstore\vn\security\SecurityConfiguration$1.class
 com\hstore\vn\service\EmailValidator.class
 com\hstore\vn\service\convert\ContactConvert.class
 com\hstore\vn\dto\request\PurchaseRequestUpdate.class
