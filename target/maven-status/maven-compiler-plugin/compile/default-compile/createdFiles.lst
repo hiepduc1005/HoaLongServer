@@ -6,9 +6,10 @@ com\hstore\vn\ServerApplication.class
 com\hstore\vn\repository\PurchaseRepository.class
 com\hstore\vn\security\SecurityConfiguration.class
 com\hstore\vn\service\PurchaseService.class
-com\hstore\vn\security\SecurityConfiguration$1.class
+com\hstore\vn\exception\ExceptionGlobalHandler.class
 com\hstore\vn\service\EmailValidator.class
 com\hstore\vn\service\convert\ContactConvert.class
+com\hstore\vn\dto\request\PurchaseRequestUpdate.class
 com\hstore\vn\repository\UserRepoistory.class
 com\hstore\vn\controller\ProductController.class
 com\hstore\vn\service\impl\DefaultContactService.class
@@ -36,6 +37,7 @@ com\hstore\vn\exception\ProductException.class
 com\hstore\vn\service\ContactService.class
 com\hstore\vn\service\ProductService.class
 com\hstore\vn\dto\response\AuthResponse.class
+com\hstore\vn\exception\DataNotFoundException.class
 com\hstore\vn\controller\AuthController.class
 com\hstore\vn\entity\PurchaseStatus.class
 com\hstore\vn\security\PasswordEncoder.class
