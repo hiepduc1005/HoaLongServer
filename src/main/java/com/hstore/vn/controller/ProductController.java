@@ -51,9 +51,9 @@ public class ProductController {
 
 	@GetMapping
 	public ResponseEntity<List<ProductResponse>> getProductBySearchWithPageAndLimit(
-			@RequestParam(required = true, defaultValue = "") String searchQuery,
-			@RequestParam(required = false, defaultValue = "1") Integer pageNumber,
-			@RequestParam(required = false, defaultValue = "10") Integer limit) {
+			@RequestParam(required = true, defaultValue = "", name = "searchQuery") String searchQuery,
+			@RequestParam(required = false, defaultValue = "1", name = "pageNumber") Integer pageNumber,
+			@RequestParam(required = false, defaultValue = "10", name = "limit") Integer limit) {
 
 		List<Product> products = productService.getProductsLikeNameForPageWithLimit(searchQuery, pageNumber, limit);
 		List<ProductResponse> productResponses = productConvert.productsConvertToProductsResponse(products);
@@ -63,7 +63,7 @@ public class ProductController {
 
 	@GetMapping("/all/pages")
 	public ResponseEntity<Integer> getNumberOfPageByProducts(
-			@RequestParam(required = false, defaultValue = "10") Integer limit) {
+			@RequestParam(required = false, defaultValue = "10", name = "limit") Integer limit) {
 
 		Integer numberOfPage = productService.getNumberOfPagesBySearch("", limit);
 
