@@ -69,7 +69,7 @@ public class SecurityConfiguration {
 						.allowCredentials(true)
 //						 .allowedOrigins("https://hoalong.netlify.app/",
 //						 "https://master--hoalong.netlify.app");
-						.allowedOriginPatterns("https://hoalong.netlify.app", "https://master--hoalong.netlify.app");
+						.allowedOriginPatterns("https://hoalong.netlify.app/", "https://master--hoalong.netlify.app/");
 						
 			}
 		};
