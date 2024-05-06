@@ -16,18 +16,18 @@ public class ServerApplication {
 	}
 	
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedMethods("*")
-						.allowCredentials(true)
-						.allowedOrigins("*");
-						
-			}
-		};
-	}
+//	@Bean
+//	public WebMvcConfigurer corsConfigurer() {
+//		return new WebMvcConfigurer() {
+//			@Override
+//			public void addCorsMappings(CorsRegistry registry) {
+//				registry.addMapping("/**")
+//						.allowedMethods("*")
+//						.allowCredentials(true)
+//						.allowedOrigins("*");
+//						
+//			}
+//		};
+//	}
 
 }
