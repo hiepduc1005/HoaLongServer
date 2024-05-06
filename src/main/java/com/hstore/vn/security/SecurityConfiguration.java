@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,8 +50,8 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http     
-		        .cors(Customizer.withDefaults())
+		http
+				.cors(Customizer.withDefaults())
 				.csrf(csrf -> csrf.disable())
 
 				.sessionManagement(sessionManage -> sessionManage
@@ -64,32 +65,32 @@ public class SecurityConfiguration {
 
 		return http.build();
 	}
-	
+
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowedOrigins(Arrays.asList("https://hoalong.netlify.app" , "https://hoalong.onrender.com" , "https://master--hoalong.netlify.app"));
-		corsConfiguration.setAllowedMethods(Arrays.asList("GET" , "POST" , "PUT" , "DELETE"));
+		corsConfiguration.setAllowedOrigins(Arrays.asList("https://hoalong.netlify.app", "https://hoalong.onrender.com",
+				"https://master--hoalong.netlify.app"));
+		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+		corsConfiguration.setAllowCredentials(true);
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**",corsConfiguration);
-		
+		source.registerCorsConfiguration("/**", corsConfiguration);
+
 		return source;
 	}
-	
-//	@Bean
-//	public WebMvcConfigurer corsConfigurer() {
-//	    return new WebMvcConfigurer() {
-//	        @Override
-//	        public void addCorsMappings(CorsRegistry registry) {
-//	            registry.addMapping("/**")
-//	                    .allowedMethods("*")
-//	                    .allowCredentials(true)
-//	                    .allowedOrigins("https://hoalong.netlify.app/", "https://hoalong.onrender.com");
-//	        }
-//	    };
-//	}
-	
-	
 
+	// @Bean
+	// public WebMvcConfigurer corsConfigurer() {
+	// return new WebMvcConfigurer() {
+	// @Override
+	// public void addCorsMappings(CorsRegistry registry) {
+	// registry.addMapping("/**")
+	// .allowedMethods("*")
+	// .allowCredentials(true)
+	// .allowedOrigins("https://hoalong.netlify.app/",
+	// "https://hoalong.onrender.com");
+	// }
+	// };
+	// }
 
 }
