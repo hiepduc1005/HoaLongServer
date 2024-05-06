@@ -59,17 +59,18 @@ public class SecurityConfiguration {
 		return http.build();
 	}
 	
-	 @Bean
-	   public WebMvcConfigurer corsConfigurer() {
-	       return new WebMvcConfigurer() {
-	           @Override
-	           public void addCorsMappings(CorsRegistry registry) {
-	               registry.addMapping("/**")
-	                       .allowedMethods("*")
-	                       .allowCredentials(true)
-	                       .allowedOrigins("https://hoalong.netlify.app/");
-	           }
-	       };
-	   }
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+	    return new WebMvcConfigurer() {
+	        @Override
+	        public void addCorsMappings(CorsRegistry registry) {
+	            registry.addMapping("/**")
+	                    .allowedMethods("*")
+	                    .allowCredentials(true)
+	                    .allowedOrigins("https://hoalong.netlify.app/", "https://hoalong.onrender.com");
+	        }
+	    };
+	}
+
 
 }
