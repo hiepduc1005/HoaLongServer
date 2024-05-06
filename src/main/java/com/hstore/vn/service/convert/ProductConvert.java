@@ -15,6 +15,10 @@ public class ProductConvert {
 	
 	public ProductResponse productConvertToProductResponse(Product product) {
 		
+		if(product == null) {
+			return null;
+		}
+		
 				return new ProductResponse(
 						product.getId(),
 						product.getName(),
