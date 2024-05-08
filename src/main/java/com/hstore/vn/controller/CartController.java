@@ -69,13 +69,18 @@ public class CartController {
 		String newCartCookie = cartService.convertMapToCartCookie(cartMap);
 
 		Cookie cookie = new Cookie("cart", newCartCookie);
-		cookie.setMaxAge(60 * 60);
-	  
+		cookie.setMaxAge(60 * 60);	  
 	    cookie.setHttpOnly(true);
-	    cookie.setSecure(true);
 	    cookie.setPath("/");
-//	    cookie.setDomain("hoalong.netlify.app");
-		response.addCookie(cookie);
+	    cookie.setDomain("hoalong.netlify.app");
+	    String cookieHeader = String.format("%s; %s; %s=%s", 
+	            cookie.toString(), 
+	            "SameSite=None", 
+	            "Secure", 
+	            "true"
+	        );
+	    response.setHeader("Set-Cookie", cookieHeader);
+	    response.addCookie(cookie);
 
 		return new ResponseEntity<String>("Product add to cart successfully!", HttpStatus.OK);
 	}
@@ -97,9 +102,15 @@ public class CartController {
 		  Cookie cookie = new Cookie("cart", newCartCookie);
 	    cookie.setMaxAge(60 * 60 ); // 1 week
 	    cookie.setHttpOnly(true);
-	    cookie.setSecure(true);
 	    cookie.setPath("/");
-//	    cookie.setDomain("hoalong.netlify.app");
+	    cookie.setDomain("hoalong.netlify.app");
+	    String cookieHeader = String.format("%s; %s; %s=%s", 
+	            cookie.toString(), 
+	            "SameSite=None", 
+	            "Secure", 
+	            "true"
+	        );
+	    response.setHeader("Set-Cookie", cookieHeader);
 
 		response.addCookie(cookie);
 
