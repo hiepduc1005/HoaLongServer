@@ -73,14 +73,19 @@ public class CartController {
 	    cookie.setHttpOnly(true);
 	    cookie.setPath("/");
 	    cookie.setDomain("hoalong.netlify.app");
-	    String cookieHeader = String.format("%s; %s; %s=%s", 
-	            cookie.toString(), 
-	            "SameSite=None", 
-	            "Secure", 
-	            "true"
+	    String cookieHeader = String.format("%s=%s; Max-Age=%d; %s; Path=%s; Domain=%s; %s=%s; %s",
+	            cookie.getName(), 
+	            cookie.getValue(),
+	            cookie.getMaxAge(),
+	            "HttpOnly",
+	            cookie.getPath(),
+	            cookie.getDomain(),
+	            "SameSite",
+	            "None",
+	            "Secure"
 	        );
 	    response.addHeader("Set-Cookie", cookieHeader);
-	    response.addCookie(cookie);
+	
 
 		return new ResponseEntity<String>("Product add to cart successfully!", HttpStatus.OK);
 	}
@@ -104,11 +109,16 @@ public class CartController {
 	    cookie.setHttpOnly(true);
 	    cookie.setPath("/");
 	    cookie.setDomain("hoalong.netlify.app");
-	    String cookieHeader = String.format("%s; %s; %s=%s", 
-	            cookie.toString(), 
-	            "SameSite=None", 
-	            "Secure", 
-	            "true"
+	    String cookieHeader = String.format("%s=%s; Max-Age=%d; %s; Path=%s; Domain=%s; %s=%s; %s",
+	            cookie.getName(), 
+	            cookie.getValue(),
+	            cookie.getMaxAge(),
+	            "HttpOnly",
+	            cookie.getPath(),
+	            cookie.getDomain(),
+	            "SameSite",
+	            "None",
+	            "Secure"
 	        );
 	    response.addHeader("Set-Cookie", cookieHeader);
 
