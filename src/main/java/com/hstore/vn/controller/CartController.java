@@ -79,7 +79,7 @@ public class CartController {
 	            "Secure", 
 	            "true"
 	        );
-	    response.setHeader("Set-Cookie", cookieHeader);
+	    response.addHeader("Set-Cookie", cookieHeader);
 	    response.addCookie(cookie);
 
 		return new ResponseEntity<String>("Product add to cart successfully!", HttpStatus.OK);
@@ -110,7 +110,7 @@ public class CartController {
 	            "Secure", 
 	            "true"
 	        );
-	    response.setHeader("Set-Cookie", cookieHeader);
+	    response.addHeader("Set-Cookie", cookieHeader);
 
 		response.addCookie(cookie);
 
