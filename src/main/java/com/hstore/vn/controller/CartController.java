@@ -73,13 +73,13 @@ public class CartController {
 	    cookie.setHttpOnly(true);
 	    cookie.setPath("/");
 	    cookie.setDomain("hoalong.netlify.app");
-	    String cookieHeader = String.format("%s=%s; Max-Age=%d; %s; Path=%s; Domain=%s; %s=%s; %s",
+	    String cookieHeader = String.format("%s=%s; Max-Age=%d; %s; Path=%s; %s=%s; %s",
 	            cookie.getName(), 
 	            cookie.getValue(),
 	            cookie.getMaxAge(),
 	            "HttpOnly",
 	            cookie.getPath(),
-	            cookie.getDomain(),
+	        
 	            "SameSite",
 	            "None",
 	            "Secure"
@@ -109,13 +109,13 @@ public class CartController {
 	    cookie.setHttpOnly(true);
 	    cookie.setPath("/");
 	    cookie.setDomain("hoalong.netlify.app");
-	    String cookieHeader = String.format("%s=%s; Max-Age=%d; %s; Path=%s; Domain=%s; %s=%s; %s",
+	    String cookieHeader = String.format("%s=%s; Max-Age=%d; %s; Path=%s; %s=%s; %s",
 	            cookie.getName(), 
 	            cookie.getValue(),
 	            cookie.getMaxAge(),
 	            "HttpOnly",
 	            cookie.getPath(),
-	            cookie.getDomain(),
+	          
 	            "SameSite",
 	            "None",
 	            "Secure"
