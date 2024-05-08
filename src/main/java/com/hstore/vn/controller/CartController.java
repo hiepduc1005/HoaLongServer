@@ -74,7 +74,7 @@ public class CartController {
 	    cookie.setHttpOnly(true);
 	    cookie.setSecure(true);
 	    cookie.setPath("/");
-	    cookie.setDomain("hoalong.netlify.app");
+//	    cookie.setDomain("hoalong.netlify.app");
 		response.addCookie(cookie);
 
 		return new ResponseEntity<String>("Product add to cart successfully!", HttpStatus.OK);
@@ -99,7 +99,7 @@ public class CartController {
 	    cookie.setHttpOnly(true);
 	    cookie.setSecure(true);
 	    cookie.setPath("/");
-	    cookie.setDomain("hoalong.netlify.app");
+//	    cookie.setDomain("hoalong.netlify.app");
 
 		response.addCookie(cookie);
 
