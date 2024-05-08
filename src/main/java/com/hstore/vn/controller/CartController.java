@@ -1,6 +1,7 @@
 package com.hstore.vn.controller;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +123,37 @@ public class CartController {
 	        );
 	    response.addHeader("Set-Cookie", cookieHeader);
 
-		response.addCookie(cookie);
+
+		return new ResponseEntity<Map<Long, Integer>>(cartMap, HttpStatus.OK);
+
+	}
+	
+	@PostMapping("/delete/all")
+	public ResponseEntity<Map<Long, Integer>> deleteAllProductInCart(
+			HttpServletResponse response,
+			@CookieValue(name = "cart", defaultValue = "") String cookieCart) {
+
+	      
+
+		Cookie cookie = new Cookie("cart", "");
+	    cookie.setMaxAge(0);
+	    cookie.setHttpOnly(true);
+	    cookie.setPath("/");
+	    cookie.setDomain("hoalong.netlify.app");
+	    String cookieHeader = String.format("%s=%s; Max-Age=%d; %s; Path=%s; %s=%s; %s",
+	            cookie.getName(), 
+	            cookie.getValue(),
+	            cookie.getMaxAge(),
+	            "HttpOnly",
+	            cookie.getPath(),
+	          
+	            "SameSite",
+	            "None",
+	            "Secure"	
+	        );
+	    response.addHeader("Set-Cookie", cookieHeader);
+
+	    Map<Long, Integer> cartMap = new HashMap<>();
 
 		return new ResponseEntity<Map<Long, Integer>>(cartMap, HttpStatus.OK);
 
