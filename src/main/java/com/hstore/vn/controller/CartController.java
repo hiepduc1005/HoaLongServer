@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hstore.vn.dto.request.CartProductAddRequest;
 import com.hstore.vn.dto.request.CartProductDeleteRequest;
+import com.hstore.vn.dto.request.CartUpdateRequest;
 import com.hstore.vn.dto.response.TotalPriceResponse;
+import com.hstore.vn.entity.Product;
 import com.hstore.vn.service.CartService;
+import com.hstore.vn.service.ProductService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +31,9 @@ public class CartController {
 
 	@Autowired
 	public CartService cartService;
+	
+	@Autowired
+	public ProductService productService;
 
 	@GetMapping("/products")
 	public ResponseEntity<Map<Long, Integer>> getAllProductsInCart(
@@ -70,7 +76,7 @@ public class CartController {
 		String newCartCookie = cartService.convertMapToCartCookie(cartMap);
 
 		Cookie cookie = new Cookie("cart", newCartCookie);
-		cookie.setMaxAge(60 * 60);	  
+		cookie.setMaxAge(60 * 60 * 24 * 30);	  
 	    cookie.setHttpOnly(true);
 	    cookie.setPath("/");
 	    cookie.setDomain("hoalong.netlify.app");
@@ -106,7 +112,7 @@ public class CartController {
 		String newCartCookie = cartService.convertMapToCartCookie(cartMap);
 
 		  Cookie cookie = new Cookie("cart", newCartCookie);
-	    cookie.setMaxAge(60 * 60 ); // 1 week
+	    cookie.setMaxAge(60 * 60 * 24 * 30); // 1 week
 	    cookie.setHttpOnly(true);
 	    cookie.setPath("/");
 	    cookie.setDomain("hoalong.netlify.app");
@@ -158,5 +164,48 @@ public class CartController {
 		return new ResponseEntity<Map<Long, Integer>>(cartMap, HttpStatus.OK);
 
 	}
+	
+	@PostMapping("/update_quantity")
+	public ResponseEntity<String> updateProductQuantity(
+			@RequestBody CartUpdateRequest cartUpdateRequest,
+			HttpServletResponse response,
+			@CookieValue(name = "cart", defaultValue = "") String cookieCart){
+		
+		Map<Long, Integer> cartMap = cartService.convertCartCookieToMap(cookieCart);
+		
+		Long productId = cartUpdateRequest.getProductId();
+		Integer productQuantity = cartUpdateRequest.getQuantity();
+		
+		Product product = productService.getProductById(productId);
+		
+		if(product == null) {
+			return new ResponseEntity<String>("Not found product", HttpStatus.BAD_REQUEST);
+		}
+		
+		cartMap.put(productId, productQuantity);
+		
+		String newCartCookie = cartService.convertMapToCartCookie(cartMap);
+		
+		Cookie cookie = new Cookie("cart", newCartCookie);
+		cookie.setMaxAge(60 * 60 * 24 * 30);	  
+		cookie.setHttpOnly(true);
+		cookie.setPath("/");
+		cookie.setDomain("hoalong.netlify.app");
+		String cookieHeader = String.format("%s=%s; Max-Age=%d; %s; Path=%s; %s=%s; %s",
+				cookie.getName(), 
+				cookie.getValue(),
+				cookie.getMaxAge(),
+				"HttpOnly",
+				cookie.getPath(),
+				
+				"SameSite",
+				"None",
+				"Secure"
+				);
+		response.addHeader("Set-Cookie", cookieHeader);
+		
+		return new ResponseEntity<String>("Update product in cart success!", HttpStatus.OK);
+	}
+		
 
 }
